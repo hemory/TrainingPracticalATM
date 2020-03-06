@@ -1,0 +1,117 @@
+ //set a bank account balance constant to $500
+            //set a specific password or pin constant
+
+            double bankAccountBalance = 500;
+            string password = "1234";
+
+
+
+            //Welcome the user and ask for pin / password
+            Console.WriteLine("Welcome to the ATM app.");
+            Console.Write("Please enter your password: ");
+            string passwordInput = Console.ReadLine();
+
+
+            while (true)
+            {
+
+                if (passwordInput == password)
+                {
+                    //Display menu and get input
+
+                    Console.Write("Please choose from the options below (1)Balance Inquiry (2)Quick Withdraw (3)Withdraw (4)Deposit: ");
+                    int choiceInput = Convert.ToInt32(Console.ReadLine());
+
+
+                    //cases: 1. balance inquiry 2. Quick withdraw 3. Withdraw 4. Deposit
+                    switch (choiceInput)
+                    {
+                        case 1:
+                            Console.WriteLine($"Your balance is currently {bankAccountBalance}");
+                            break;
+                        case 2:
+                            //quick withdraw is $20
+                            Console.WriteLine("The Q-Dubb is $20.");
+
+                            //validate choice and sanitize data
+                            Console.Write("Would you like to continue. y/n: ");
+                            string confirmationInput = Console.ReadLine().ToLower();
+                            if (confirmationInput == "y")
+                            {
+                                bankAccountBalance -= 20;
+                                Console.WriteLine($"Your balance is currently ${bankAccountBalance}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("You chose not to continue with the quick withdraw. Please come again.");
+                            }
+
+                            break;
+                        case 3:
+                            //check to make sure withdraw is in increments of 20
+                            //Person cannot withdraw more than the balance
+                            Console.WriteLine("Enter the amount you would like to withdraw in increments of 20");
+                            int withdrawAmount = Convert.ToInt32(Console.ReadLine());
+
+                            if (withdrawAmount < bankAccountBalance)
+                            {
+                                if (withdrawAmount % 20 == 0)
+                                {
+                                    //Confirm amount
+                                    Console.WriteLine($"You chose to withdraw {withdrawAmount}?  Would you like to continue?");
+
+                                    string confirmationAmount = Console.ReadLine().ToLower();
+                                    if (confirmationAmount == "y")
+                                    {
+                                        bankAccountBalance -= withdrawAmount;
+                                        Console.WriteLine($"Your balance is currently ${bankAccountBalance}");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("You chose not to continue withdrawing money. Please come again.");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Must use increments of 20.");
+
+                                }
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("You do not have enough money in your account.");
+                            }
+                            break;
+                        case 4:
+                            Console.Write("How much money would you like to deposit?: ");
+                            int moneyDeposited = Convert.ToInt32(Console.ReadLine());
+
+                            //validate deposit
+                            Console.Write($"You chose to deposit {moneyDeposited}. Is this correct? y/n: ");
+                            string moneyDepositedValidation = Console.ReadLine().ToLower();
+
+                            if (moneyDepositedValidation == "y")
+                            {
+                                bankAccountBalance += moneyDeposited;
+
+                                Console.WriteLine($"Your new bank account balance is {bankAccountBalance}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("You chose not to continue with this action of depositing. Please come again");
+                            }
+                            break;
+                        default:
+                            Console.WriteLine("You entered an invalid response. Please try again.");
+                            break;
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine("Sorry, that is not the correct password. Please exit the application and try again.");
+                }
+
+
+            }
